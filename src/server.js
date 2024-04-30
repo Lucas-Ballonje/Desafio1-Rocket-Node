@@ -1,1 +1,8 @@
-import http from "node:http"
+import { createApp } from "./route.js";
+
+const app = createApp();
+
+
+app.listen(3333, () => {
+    console.log("Funcionando");
+})
