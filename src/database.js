@@ -35,15 +35,17 @@ export class Database {
         return data;
     }
 
-    async select(table, search) {
+    select(table, search) {
         let data = this.#database[table] ?? []
 
-        if(search){
+        if(search && search.title){
             data = data.filter(row => {
                 return Object.entries(search).some(([key, value]) => {
                     return row[key].toLowerCase().includes(value.toLowerCase())
                 })
             })
+            data = data.filter(row => row.title.toLowerCase().includes(search.title.toLowerCase()));
+            return item ? [item] : [];
         }
 
         return data
