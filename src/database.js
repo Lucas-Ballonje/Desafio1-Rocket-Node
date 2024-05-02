@@ -56,6 +56,7 @@ export class Database {
             return false
         }
     }
+
     update(table, id, data){
         const rowIndex = this.#database[table].findIndex(row => row.id == id)        
         if(rowIndex > -1){
@@ -64,6 +65,20 @@ export class Database {
                 ...data
             }
             this.#persist()
+        }
+    }
+
+    patch(table, id, data){
+        const rowIndex = this.#database[table].findIndex(row => row.id == id)        
+        if (rowIndex > -1) {
+            const updatedData = { ...this.#database[table][rowIndex], ...data };
+            if (Object.keys(data).length === 1 && 'completed_at' in data) {
+                updatedData.updated_at = this.#database[table][rowIndex].updated_at;
+            } else {
+                updatedData.updated_at = new Date().toISOString();
+            }
+            this.#database[table][rowIndex] = updatedData;
+            this.#persist();
         }
     }
 }

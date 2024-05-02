@@ -55,8 +55,7 @@ export function createApp() {
         
         const task = database.select("tasks", title, {
             title,
-            description,
-            updated_at,
+            description,            
             completed_at
         })                     
 
@@ -96,6 +95,25 @@ export function createApp() {
     
         return res.status(204).end();
 
+    })
+
+    app.patch("/tasks/:id/complete", (req, res) => {        
+        const { id } = req.params
+        const task = database.select("tasks", id);
+    
+        if (!task) {
+            return res.status(404).json({ error: "Tarefa não encontrada" });
+        }
+
+        const isCompleted = !task.completed_at;
+        const updatedData = {
+            completed_at: isCompleted ? new Date().toISOString() : null,
+            updated_at: new Date().toISOString()
+        }
+
+        database.patch("tasks", id, updatedData)
+
+        return res.status(204).end()
     })
 
     return app;
