@@ -59,7 +59,6 @@ export function createApp() {
             updated_at,
             completed_at
         })                     
-    
 
         res.status(200).json(task); 
     })
@@ -68,12 +67,34 @@ export function createApp() {
         const { id } = req.params                    
 
         const isDelete = database.delete("tasks", id);
-
+        
         if(isDelete){
             return res.writeHead(204).end()            
         } else {
             return res.status(404).json({ error: "ID não existe" })
         }
+
+    })
+
+    app.put("/tasks/:id", (req, res) => {
+        const { id } = req.params;
+        const { title, description } = req.body;
+        const updated_at = new Date().toISOString();
+    
+        const task = database.select("tasks", id);
+    
+        if (!task) {
+            return res.status(404).json({ error: "Tarefa não encontrada" });
+        }
+    
+        if (!title && !description) {
+            return res.status(400).json({ error: "É preciso o title e o description" });
+        }
+    
+        const updatedData = { title, description, updated_at };
+        database.update("tasks", id, updatedData);
+    
+        return res.status(204).end();
 
     })
 

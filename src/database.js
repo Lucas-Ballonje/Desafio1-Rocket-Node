@@ -39,7 +39,7 @@ export class Database {
         let data = this.#database[table] ?? []        
         if(search) {
             data = data.filter(table => {
-                return table.title.toLowerCase() == search.toLowerCase()
+                return table.title?.toLowerCase() === search.toLowerCase();
             })
         }
 
@@ -47,13 +47,23 @@ export class Database {
     }
 
     delete(table, id){
-        const rowIndex = this.#database[table].findIndex(row => row.id == id)        
+        const rowIndex = this.#database[table].findIndex(row => row.id == id)
         if(rowIndex > -1){
             this.#database[table].splice(rowIndex, 1)
             this.#persist()
             return true
         } else {
             return false
+        }
+    }
+    update(table, id, data){
+        const rowIndex = this.#database[table].findIndex(row => row.id == id)        
+        if(rowIndex > -1){
+            this.#database[table][rowIndex] = { 
+                ...this.#database[table][rowIndex],
+                ...data
+            }
+            this.#persist()
         }
     }
 }
