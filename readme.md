@@ -1,10 +1,6 @@
-# Título do projeto
+# Desafio Rocket Node
 
 Primeiro desafio da rocketseat de nodeJS utilizei o express para poder ajudar na hora de montar as rotas de tasks
-
-## 🚀 Começando
-
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
 ### 🔧 Instalação
 
