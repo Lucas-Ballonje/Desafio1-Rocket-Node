@@ -36,18 +36,24 @@ export class Database {
     }
 
     select(table, search) {
-        let data = this.#database[table] ?? []
-
-        if(search && search.title){
-            data = data.filter(row => {
-                return Object.entries(search).some(([key, value]) => {
-                    return row[key].toLowerCase().includes(value.toLowerCase())
-                })
+        let data = this.#database[table] ?? []        
+        if(search) {
+            data = data.filter(table => {
+                return table.title.toLowerCase() == search.toLowerCase()
             })
-            data = data.filter(row => row.title.toLowerCase().includes(search.title.toLowerCase()));
-            return item ? [item] : [];
         }
 
         return data
+    }
+
+    delete(table, id){
+        const rowIndex = this.#database[table].findIndex(row => row.id == id)        
+        if(rowIndex > -1){
+            this.#database[table].splice(rowIndex, 1)
+            this.#persist()
+            return true
+        } else {
+            return false
+        }
     }
 }

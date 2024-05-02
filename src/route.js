@@ -51,16 +51,30 @@ export function createApp() {
     app.get("/tasks/:title", (req, res) => {
 
         const { title } = req.params        
-        const search = req.body
+        const { description, updated_at, completed_at } = req.query
         
-        const task = database.select("tasks/:title", title, {
-            description: search,
-            updated_at: search
+        const task = database.select("tasks", title, {
+            title,
+            description,
+            updated_at,
+            completed_at
         })                     
-        
-        console.log(req.params);
+    
 
         res.status(200).json(task); 
+    })
+
+    app.delete("/tasks/:id", (req, res) => {
+        const { id } = req.params                    
+
+        const isDelete = database.delete("tasks", id);
+
+        if(isDelete){
+            return res.writeHead(204).end()            
+        } else {
+            return res.status(404).json({ error: "ID não existe" })
+        }
+
     })
 
     return app;
