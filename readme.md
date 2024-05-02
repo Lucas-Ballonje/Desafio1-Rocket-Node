@@ -1,6 +1,6 @@
 # Desafio Rocket Node
 
-Primeiro desafio da rocketseat de nodeJS utilizei o express para poder ajudar na hora de montar as rotas de tasks
+Primeiro desafio da rocketseat de NodeJS utilizei o express para poder ajudar na hora de montar as rotas de tasks
 
 ### 🔧 Instalação
 
@@ -9,8 +9,6 @@ Para instalar o express realizar o seguinte comando:
 ```
 npm install
 ```
-
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
 
 ## ⚙️ Executando os testes
 
